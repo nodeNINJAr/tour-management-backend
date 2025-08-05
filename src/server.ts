@@ -1,21 +1,23 @@
+/* eslint-disable no-console */
 import {Server} from "http"
-import express, { Request, Response } from "express";
+import express from "express";
 import mongoose from "mongoose";
-import { promise } from "zod";
+import { envVars } from "./app/confiq/env";
+
 
 // 
 let server:Server;
 
 const app = express();
 
-
+// 
 const startServer = async()=>{
    try{
-        await mongoose.connect("mongodb+srv://plantNet:wDjP7FWFqFN3D7aS@cluster0.pm9ea.mongodb.net/tour-DB?retryWrites=true&w=majority&appName=Cluster0")
+        await mongoose.connect(envVars.DB_URL)
         console.log("Server connected to DB");
         //    
-        server = app.listen(5000,()=>{
-        console.log(`Server is running on the port 5000`);
+        server = app.listen(envVars.PORT,()=>{
+        console.log(`Server is running on the port ${envVars.PORT}`);
         })
    }catch(err){
       console.log(err);
