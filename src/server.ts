@@ -1,14 +1,12 @@
 /* eslint-disable no-console */
 import {Server} from "http"
-import express from "express";
 import mongoose from "mongoose";
 import { envVars } from "./app/confiq/env";
+import app from "./app";
 
 
 // 
 let server:Server;
-
-const app = express();
 
 // 
 const startServer = async()=>{
