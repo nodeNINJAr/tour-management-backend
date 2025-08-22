@@ -3,7 +3,7 @@ import { IsActive, Role } from "./user.interface";
 
 
 
-
+// zod user validate
 export const createUserZodSchema = z.object({
   name: z
     .string({ invalid_type_error: "Name must be string" })
@@ -46,7 +46,7 @@ export const createUserZodSchema = z.object({
 
 
 
-    //  update schema  
+    // zod update schema  
 export const updateUserZodSchema = z.object({
   name: z
     .string({ invalid_type_error: "Name must be string" })
