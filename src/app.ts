@@ -21,6 +21,7 @@ app.use(cors());
 app.use("/api/v1/", router)
 
 
+
 // default route
 app.get("/", (req:Request, res:Response)=>{
     res.status(200).json({
