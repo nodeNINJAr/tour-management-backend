@@ -54,6 +54,7 @@ const createUser =  catchAsync(async(req:Request, res:Response , next:NextFuncti
 
 
 // get all users
+// eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
 const getAllUsers = catchAsync((async(req:Request, res:Response , next:NextFunction)=>{
   const result = await UserServices.getAllUsers();
 
