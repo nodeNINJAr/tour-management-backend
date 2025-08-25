@@ -34,10 +34,20 @@ const jwtPayload = {
 }
 
 // 
-const accessToken = generateToken(jwtPayload, envVars.JWT_ACCESS_SECRET, envVars.JWT_ACCESS_EXPIRES)
+const accessToken = generateToken(jwtPayload, envVars.JWT_ACCESS_SECRET, envVars.JWT_ACCESS_EXPIRES);
+const refreshToken = generateToken(jwtPayload, envVars.JWT_REFRESH_SECRET, envVars.JWT_ACCESS_EXPIRES);
+//
+// delete isUserExist.password;
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
+const {password:pass , ...rest} = isUserExist;
+
+
 // 
 return {
-   accessToken
+   accessToken,
+   refreshToken,
+   user:rest,
 }
 
 //  
