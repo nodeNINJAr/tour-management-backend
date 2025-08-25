@@ -35,6 +35,7 @@ import { sendResponse } from "../../../utils/sendResponse";
 
 // cretae user
 
+// eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
 const createUser =  catchAsync(async(req:Request, res:Response , next:NextFunction)=>{
    const user = await UserServices.createUser(req.body)
 

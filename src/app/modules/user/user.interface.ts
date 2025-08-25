@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { Types } from "mongoose";
 
 export enum Role {
@@ -30,7 +31,7 @@ export interface IUser{
   address?:string;
   isDeleted?:string;
   isActive?:IsActive;
-  isVerified?:string;
+  isVerified?:boolean;
   role:Role;
   auths:IAuthProvider[];
   bookings?:Types.ObjectId[];
