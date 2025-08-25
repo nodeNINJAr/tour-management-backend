@@ -21,7 +21,8 @@ export const checkAuth = (...authRoles:string[]) => async(req:Request, res:Respo
         throw new AppError(403, "Role not permitted to access this route")
     }
     // 
-    
+    req.user = verifiedToken
+    // 
     next();
     }
     // 
