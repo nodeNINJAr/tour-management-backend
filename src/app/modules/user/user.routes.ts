@@ -14,7 +14,8 @@ const router = Router();
 
 // 
 router.post('/register', validationRequest(createUserZodSchema), UserControllers.createUser);
-
+// 
+router.patch("/:id", checkAuth(...Object.values(Role)), UserControllers.updateUser) // make all arr of str to str
 // 
 router.get('/all-users', checkAuth(Role.ADMIN, Role.SUPER_ADMIN), UserControllers.getAllUsers);
 
