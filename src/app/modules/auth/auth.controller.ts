@@ -10,8 +10,18 @@ import { AuthServices } from "./auth.services";
 const credentialsLogin = catchAsync(async(req:Request, res:Response , next:NextFunction)=>{
     
     // 
-   const loginInfo = await AuthServices.credentialsLogin(req.body)
+   const loginInfo = await AuthServices.credentialsLogin(req.body);
+   // acces token set to cookie    
+   res.cookie("accessToken", loginInfo.accessToken,{
+     httpOnly:true,
+     secure:false,
+   })    
 
+   // refrsh token set to cookies
+   res.cookie("refreshToken", loginInfo.refreshToken,{
+     httpOnly:true,
+     secure:false,
+   })    
 
     //    
     sendResponse(res, {
@@ -19,6 +29,23 @@ const credentialsLogin = catchAsync(async(req:Request, res:Response , next:NextF
     statusCode:httpStatus.OK,
     message:"User Login Successfully",
     data:loginInfo,
+    });
+})
+
+
+
+// eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
+const getNewAccessTokens = catchAsync(async(req:Request, res:Response , next:NextFunction)=>{
+    // 
+    const refreshToken = req.cookies.refreshToken;
+    // 
+   const tokenInfo = await AuthServices.getNewAccessToken(refreshToken as string)
+    //    
+    sendResponse(res, {
+    success:true, 
+    statusCode:httpStatus.OK,
+    message:"New Token Genarated Successfully",
+    data:tokenInfo,
     })
 
 
@@ -27,5 +54,6 @@ const credentialsLogin = catchAsync(async(req:Request, res:Response , next:NextF
 
 
 export const  AuthControllers = {
-    credentialsLogin
+    credentialsLogin,
+    getNewAccessTokens
 } 
