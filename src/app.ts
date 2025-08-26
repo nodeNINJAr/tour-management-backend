@@ -7,6 +7,7 @@ import cookieParser from 'cookie-parser';
 import passport from 'passport';
 import expressSession from "express-session";
 import "./app/confiq/passport"
+import { envVars } from './app/confiq/env';
 
 
 // 
@@ -15,7 +16,7 @@ const app = express();
 
 // middleware
 app.use(expressSession({
-    secret:"Your secret",
+    secret:envVars.EXPRESS_SESSION_SECRET,
     resave:false,
     saveUninitialized:false,
 }
