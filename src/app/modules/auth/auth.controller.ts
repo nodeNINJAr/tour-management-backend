@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+import { createUserTokens } from './../../../utils/userTokens';
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-unused-vars */
 import { setAuthCookies } from './../../../utils/setCookie';
@@ -6,6 +8,9 @@ import { catchAsync } from "../../../utils/catchAsync";
 import { sendResponse } from "../../../utils/sendResponse";
 import httpStatus from "http-status-codes"
 import { AuthServices } from "./auth.services";
+import { JwtPayload } from 'jsonwebtoken';
+import AppError from '../../errorHelpers/AppError';
+import { envVars } from '../../confiq/env';
 
 
 
@@ -79,7 +84,7 @@ const resetPassword = catchAsync(async(req:Request, res:Response , next:NextFunc
     const newPassword = req.body.newPassword;
     const decodedToken = req.user;
     // 
-    await AuthServices.resetPassword(oldPassword, newPassword, decodedToken)
+    await AuthServices.resetPassword(oldPassword, newPassword, decodedToken as JwtPayload)
     //    
     sendResponse(res, {
     success:true, 
@@ -92,6 +97,23 @@ const resetPassword = catchAsync(async(req:Request, res:Response , next:NextFunc
 })
 
 
+// googleCallbackController
+const googleCallbackController = catchAsync(async(req:Request, res:Response , next:NextFunction)=>{
+    // 
+    const user = req.user;
+    console.log(user);
+    // 
+    if(!user){
+        throw new AppError(httpStatus.NOT_FOUND, "User Not found")
+    }
+    // 
+    const tokenInfo = await createUserTokens(user)
+    // 
+    setAuthCookies(res,tokenInfo)
+    //    
+    res.redirect(envVars.FRONTEND_URL)
+
+})
 
 
 
@@ -103,4 +125,5 @@ export const  AuthControllers = {
     getNewAccessTokens,
     userLogOut,
     resetPassword,
+    googleCallbackController
 } 
