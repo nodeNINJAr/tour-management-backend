@@ -6,6 +6,8 @@ const router = Router();
 
 router.post("/login", AuthControllers.credentialsLogin);
 router.post("/refresh-token", AuthControllers.getNewAccessTokens);
+router.post("/logout", AuthControllers.userLogOut);
+
 
 // 
 export const AuthRoutes = router;
