@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-console */
 import { createUserTokens } from './../../../utils/userTokens';
 /* eslint-disable @typescript-eslint/no-unused-vars */
@@ -11,23 +12,70 @@ import { AuthServices } from "./auth.services";
 import { JwtPayload } from 'jsonwebtoken';
 import AppError from '../../errorHelpers/AppError';
 import { envVars } from '../../confiq/env';
+import passport from 'passport';
 
 
 
 // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
-const credentialsLogin = catchAsync(async(req:Request, res:Response , next:NextFunction)=>{
-    // 
-   const loginInfo = await AuthServices.credentialsLogin(req.body);
-  // sent res and info to set cookies 
-   setAuthCookies(res, loginInfo)
+const credentialsLogin = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+    // const loginInfo = await AuthServices.credentialsLogin(req.body)
 
-    //    
-    sendResponse(res, {
-    success:true, 
-    statusCode:httpStatus.OK,
-    message:"User Login Successfully",
-    data:loginInfo,
-    });
+    passport.authenticate("local", async (err: any, user: any, info: any) => {
+
+        if (err) {
+
+            // ❌❌❌❌❌
+            // throw new AppError(401, "Some error")
+            // next(err)
+            // return new AppError(401, err)
+
+
+            // ✅✅✅✅
+            // return next(err)
+            console.log("from err", err);
+            return next(new AppError(401, err))
+        }
+
+        if (!user) {
+            // console.log("from !user");
+            // return new AppError(401, info.message)
+            return next(new AppError(401, info.message))
+        }
+
+        const userTokens = await createUserTokens(user)
+
+        // delete user.toObject().password
+
+        const { password: pass, ...rest } = user.toObject()
+
+
+        setAuthCookies(res, userTokens)
+
+        sendResponse(res, {
+            success: true,
+            statusCode: httpStatus.OK,
+            message: "User Logged In Successfully",
+            data: {
+                accessToken: userTokens.accessToken,
+                refreshToken: userTokens.refreshToken,
+                user: rest
+
+            },
+        })
+    })(req, res, next)
+
+    // res.cookie("accessToken", loginInfo.accessToken, {
+    //     httpOnly: true,
+    //     secure: false
+    // })
+
+
+    // res.cookie("refreshToken", loginInfo.refreshToken, {
+    //     httpOnly: true,
+    //     secure: false,
+    // })
+
+
 })
 
 
@@ -120,8 +168,6 @@ const googleCallbackController = catchAsync(async(req:Request, res:Response , ne
     res.redirect(`${envVars.FRONTEND_URL}/${redirectTo}`)
 
 })
-
-
 
 
 
