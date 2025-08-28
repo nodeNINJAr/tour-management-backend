@@ -48,7 +48,6 @@ const credentialsLogin = catchAsync(async (req: Request, res: Response, next: Ne
 
         const { password: pass, ...rest } = user.toObject()
 
-
         setAuthCookies(res, userTokens)
 
         sendResponse(res, {
@@ -63,18 +62,6 @@ const credentialsLogin = catchAsync(async (req: Request, res: Response, next: Ne
             },
         })
     })(req, res, next)
-
-    // res.cookie("accessToken", loginInfo.accessToken, {
-    //     httpOnly: true,
-    //     secure: false
-    // })
-
-
-    // res.cookie("refreshToken", loginInfo.refreshToken, {
-    //     httpOnly: true,
-    //     secure: false,
-    // })
-
 
 })
 

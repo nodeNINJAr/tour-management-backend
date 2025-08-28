@@ -13,7 +13,7 @@ const router = Router();
 
 
 // 
-router.post('/register', validationRequest(createUserZodSchema), UserControllers.createUser);
+router.post('/register', UserControllers.createUser);
 // 
 router.patch("/:id",validationRequest(updateUserZodSchema), checkAuth(...Object.values(Role)), UserControllers.updateUser) // make all arr of str to str
 // 
