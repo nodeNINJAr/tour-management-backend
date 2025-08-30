@@ -8,3 +8,6 @@ const router = Router();
 
 
 router.post("/create", checkAuth())
+
+
+export const TourRoutes = router;
