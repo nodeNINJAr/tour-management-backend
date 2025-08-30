@@ -10,7 +10,7 @@ import { handlerValidationError } from "../helpers/handlerValidationError";
 
 
 // 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
+// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars, no-unused-vars
 export const globalErrorHandler =(err:any, req:Request, res:Response, next:NextFunction)=>{
 
     if (envVars.NODE_ENV === "development") {
