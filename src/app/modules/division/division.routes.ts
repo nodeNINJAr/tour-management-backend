@@ -8,7 +8,7 @@ import { DivisionController } from "./division.controller";
 const router = Router();
 
 
-router.post("/create", checkAuth(Role.ADMIN, Role.SUPER_ADMIN),DivisionController.updateDivision)
+router.post("/create", checkAuth(Role.ADMIN, Role.SUPER_ADMIN),DivisionController.createDivision)
 router.get("/",DivisionController.getAllDivisions);
 router.get("/:slug",DivisionController.getSingleDivision);
 
