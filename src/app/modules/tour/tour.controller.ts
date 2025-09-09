@@ -1,3 +1,4 @@
+import { TourService } from './tour.services';
 
 import { Request, Response } from 'express';
 import { catchAsync } from '../../../utils/catchAsync';
@@ -59,8 +60,10 @@ const getAllTourTypes = catchAsync(async (req: Request, res: Response) => {
 });
 
 
+// 
 const createTourType = catchAsync(async (req: Request, res: Response) => {
     const { name } = req.body;
+    // 
     const result = await TourService.createTourType(name);
     sendResponse(res, {
         statusCode: 201,
@@ -73,7 +76,7 @@ const createTourType = catchAsync(async (req: Request, res: Response) => {
 const updateTourType = catchAsync(async (req: Request, res: Response) => {
     const { id } = req.params;
     const { name } = req.body;
-    const result = await TourService.updateTourType(id, name);
+    const result = await TourService.updateTourType(id, {name});
     sendResponse(res, {
         statusCode: 200,
         success: true,

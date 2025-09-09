@@ -91,7 +91,7 @@ const createTour = async (payload: ITour) => {
 // 
 const getAllTours = async (query: Record<string, string>) => {
 
-
+}
  
 
 
@@ -115,21 +115,24 @@ const deleteTour = async (id: string) => {
     return await Tour.findByIdAndDelete(id);
 };
 
+
 //
 const createTourType = async (payload: ITourType) => {
-    const existingTourType = await TourType.findOne({ name: payload.name });
+    const existingTourType = await TourType.findOne({ name:payload });
 
     if (existingTourType) {
         throw new Error("Tour type already exists.");
-    }
+    }  
 
-    return await TourType.create({ name });
+    return await TourType.create({ name:payload });
 };
 
 // 
 const getAllTourTypes = async () => {
     return await TourType.find();
 };
+
+
 
 // 
 const updateTourType = async (id: string, payload: ITourType) => {
